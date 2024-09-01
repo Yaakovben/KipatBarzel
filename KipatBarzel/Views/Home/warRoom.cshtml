@@ -1,0 +1,70 @@
+﻿@model IEnumerable<KipatBarzel.Models.Threat>
+
+@{
+    ViewData["Title"] = "warRoom";
+}
+
+<h1> חדר מלחמה</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ResponceTime)
+            </th>
+            <th>
+                פרטים
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FireTime)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ResponceTime)
+            </td>
+                <td>
+                    <span>@item.TerrorOrg.Name,@item.Type.Name</span>
+                </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FireTime)
+            </td >
+
+            @if(item.Status == KipatBarzel.Utils.ThreatStatus.active)
+            {
+            <td >
+                @Html.ActionLink("טמיר", "kipa", new {  tid=item.Id, did = 1 }) |
+                        @Html.ActionLink("קלע דוד", "kipa", new { tid = item.Id, did = 2 }) ||
+                        @Html.ActionLink("חץ 3", "kipa", new { tid = item.Id, did = 3 }) ||
+                
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        האיום לא בתוקף
+                    </td>
+                }
+            </tr>
+}
+    </tbody>
+</table>
